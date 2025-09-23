@@ -189,8 +189,21 @@
     const tagsEl = drawer ? select(drawer, '[data-drawer-tags],[data-showroom-tags],#drawer-tags,.drawer-tags,.showroom-drawer__tags') : null;
     const skuEl = drawer ? select(drawer, '[data-drawer-sku],[data-showroom-sku],#drawer-sku,.drawer-sku,.showroom-drawer__sku') : null;
     const heroContainer = drawer ? select(drawer, '[data-drawer-hero],[data-showroom-hero],#drawer-hero,.drawer-hero,.showroom-drawer__hero') : null;
-    const heroImg = heroContainer ? (heroContainer.tagName === 'IMG' ? heroContainer : heroContainer.querySelector('img')) : null;
-    const gallery = drawer ? select(drawer, '[data-drawer-gallery],[data-showroom-gallery],#drawer-gallery,.drawer-gallery,.showroom-drawer__gallery') : null;
+    let heroImg = null;
+    if(heroContainer){
+      if(heroContainer.tagName === 'IMG'){
+        heroImg = heroContainer;
+      }else{
+        heroImg = heroContainer.querySelector('img');
+        if(!heroImg){
+          heroImg = document.createElement('img');
+          heroImg.alt = '';
+          heroImg.className = 'showroom-hero-image';
+          heroContainer.appendChild(heroImg);
+        }
+      }
+    }
+    const gallery = drawer ? select(drawer, '[data-drawer-gallery],[data-showroom-gallery],#drawer-thumbs,#drawer-gallery,.drawer-gallery,.showroom-drawer__gallery') : null;
     const previewBtn = drawer ? select(drawer, '[data-3d-preview],[data-drawer-preview],[data-showroom-preview],#drawer-preview3d,#drawer-preview,.drawer-preview,.showroom-drawer__preview') : null;
     const templateBtn = drawer ? select(drawer, '[data-template-button],[data-drawer-template],[data-showroom-template],#drawer-template,.drawer-template,.showroom-drawer__template') : null;
     let pricingTable = drawer ? select(drawer, '[data-pricing-table],#pricing-table,.pricing-table,.showroom-drawer__pricing') : null;
