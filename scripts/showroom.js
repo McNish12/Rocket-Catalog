@@ -557,13 +557,6 @@
       name.textContent = product.name;
       body.appendChild(name);
 
-      if(product.tagline){
-        const blurb = document.createElement('p');
-        blurb.className = 'showroom-card__tagline';
-        blurb.textContent = product.tagline;
-        body.appendChild(blurb);
-      }
-
       const price = document.createElement('div');
       price.className = 'showroom-card__price';
       price.textContent = priceSummary(product);
