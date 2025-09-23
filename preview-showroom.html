@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rocket Catalog Showroom Preview</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%20100%20100'%3E%3Ctext%20y%3D'.9em'%20font-size%3D'90'%3E%F0%9F%8F%86%3C%2Ftext%3E%3C%2Fsvg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brand: #f97316;
+      --brand-dark: #ea580c;
+      --bg: #0f172a;
+      --surface: #111827;
+      --surface-alt: rgba(15, 23, 42, 0.8);
+      --border: rgba(148, 163, 184, 0.2);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --wrap: 1280px;
+      --radius: 18px;
+      --pad: 20px;
+      --shadow: 0 12px 45px rgba(15, 23, 42, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.25), transparent 45%), #020617;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(2, 6, 23, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    header .wrap {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      padding: 16px var(--pad);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .brand img {
+      height: 40px;
+      width: auto;
+    }
+
+    nav {
+      margin-left: auto;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(148, 163, 184, 0.08);
+      color: var(--muted);
+      transition: all 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+      border-color: rgba(148, 163, 184, 0.35);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+    }
+
+    .hero {
+      position: relative;
+      padding: 120px var(--pad) 80px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.6), rgba(14, 116, 144, 0.25));
+      opacity: 0.65;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: var(--wrap);
+      margin: 0 auto;
+      display: grid;
+      gap: 28px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.65);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero p {
+      max-width: 560px;
+      font-size: 16px;
+      color: rgba(226, 232, 240, 0.8);
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .actions a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: #fff;
+      color: #0f172a;
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .actions a.secondary {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+    }
+
+    .filters {
+      max-width: var(--wrap);
+      margin: -32px auto 0;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .filters label {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .filters input,
+    .filters select {
+      background: rgba(15, 23, 42, 0.65);
+      color: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      flex: 1 1 220px;
+      min-width: 200px;
+    }
+
+    .filters .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(148, 163, 184, 0.14);
+      color: rgba(226, 232, 240, 0.8);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip.active {
+      background: #fff;
+      color: #0f172a;
+    }
+
+    .collection {
+      max-width: var(--wrap);
+      margin: 48px auto 80px;
+      display: grid;
+      gap: 32px;
+    }
+
+    .section-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .section-headline span {
+      font-size: 13px;
+      color: rgba(226, 232, 240, 0.55);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .tile {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.45);
+    }
+
+    .tile img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tile .meta {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .tile .meta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .tile .meta p {
+      font-size: 14px;
+      color: rgba(226, 232, 240, 0.7);
+      line-height: 1.5;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.16);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(226, 232, 240, 0.65);
+    }
+
+    footer {
+      padding: 32px var(--pad) 48px;
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+      background: rgba(2, 6, 23, 0.92);
+    }
+
+    footer .wrap {
+      max-width: var(--wrap);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    footer img {
+      height: 46px;
+      width: auto;
+    }
+
+    /* Drawer */
+    .detail-drawer {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 90;
+    }
+
+    .detail-drawer.open {
+      display: block;
+    }
+
+    .detail-drawer .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(6px);
+    }
+
+    .detail-drawer .panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(520px, 92vw);
+      height: 100%;
+      background: #0b1120;
+      border-left: 1px solid var(--border);
+      box-shadow: -18px 0 48px rgba(2, 6, 23, 0.4);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .detail-drawer.open .panel {
+      transform: translateX(0);
+    }
+
+    .detail-drawer .close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .detail-drawer .media {
+      padding: 64px 32px 32px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .detail-drawer .hero {
+      background: rgba(15, 23, 42, 0.65);
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .detail-drawer .hero img {
+      max-width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+    }
+
+    .detail-drawer .thumbs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+    }
+
+    .detail-drawer .thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .detail-drawer .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-drawer .info {
+      padding: 0 32px 48px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .detail-drawer h2 {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 18px;
+    }
+
+    .detail-drawer p {
+      font-size: 14px;
+      color: rgba(226, 232, 240, 0.74);
+      line-height: 1.6;
+    }
+
+    .detail-meta {
+      display: grid;
+      gap: 10px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .detail-meta span {
+      color: #fff;
+    }
+
+    .detail-drawer .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--brand);
+      color: #0f172a;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      justify-content: center;
+    }
+
+    .detail-drawer .cta:hover {
+      background: var(--brand-dark);
+      color: #fff;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 100;
+    }
+
+    .lightbox.open {
+      display: block;
+    }
+
+    .lightbox .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(6px);
+    }
+
+    .lightbox .frame {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: min(1020px, 92vw);
+      background: #020617;
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .lightbox .frame img {
+      width: 100%;
+      display: block;
+      max-height: 80vh;
+      object-fit: contain;
+      background: #0b1120;
+    }
+
+    .lightbox .frame button {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      nav { display: none; }
+      .hero { padding: 90px 18px 70px; }
+      .filters { margin: -22px 18px 0; }
+      .filters input,
+      .filters select { flex: 1 1 100%; }
+      .collection { margin: 38px 18px 70px; }
+      .detail-drawer .panel { width: 100%; }
+      .detail-drawer .info { padding: 0 22px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="#">
+        <img src="Assets/Honors/Honors%20Thick%20Logo.png" alt="Honors" />
+        <span>Rocket Catalog</span>
+      </a>
+      <nav>
+        <a href="#showroom">Showroom</a>
+        <a href="#awards">Awards</a>
+        <a href="#apparel">Apparel</a>
+        <a href="#kits">Kitting</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">Curated collection</span>
+        <h1>Modern recognition pieces engineered for the Rocket brand.</h1>
+        <p>
+          Explore the halo of premium awards, gifts, and interactive experiences crafted for the Rocket network. Each
+          selection is photographed in high fidelity with ready-to-deploy 3D previews and spec sheets.
+        </p>
+        <div class="actions">
+          <a href="#collection">Browse Collection</a>
+          <a class="secondary" href="#">Download Lookbook</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="filters" id="filters">
+      <label for="search">Search</label>
+      <input id="search" type="search" placeholder="Search materials, finishes, or product names" />
+      <label for="category">Category</label>
+      <select id="category">
+        <option value="">All Categories</option>
+        <option value="award">Awards</option>
+        <option value="apparel">Apparel</option>
+        <option value="gift">Gifting</option>
+      </select>
+      <div class="chips">
+        <button class="chip" data-chip="new">New Arrival</button>
+        <button class="chip" data-chip="limited">Limited Run</button>
+        <button class="chip" data-chip="custom">Custom Fabrication</button>
+      </div>
+    </section>
+
+    <section class="collection" id="collection">
+      <div class="section-headline">
+        <strong>Showroom Highlights</strong>
+        <span id="result-count">6 pieces</span>
+      </div>
+      <div class="grid" id="showroom-grid">
+        <article class="tile" data-id="rocket-halo-float" data-category="award" data-tags="acrylic|halo|lighted">
+          <img src="Assets/images/RKT_HALO_FLOAT.jpg" alt="Rocket Halo Float" />
+          <div class="meta">
+            <h3>Rocket Halo Float</h3>
+            <p>Illuminated acrylic monolith with suspended metal accents and programmable halo lighting.</p>
+            <div class="tags">
+              <span class="tag">Halo</span>
+              <span class="tag">Illuminated</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile" data-id="brandino-award" data-category="award" data-tags="crystal|tower|premium">
+          <img src="Assets/images/Brandino_Award_8.jpg" alt="Brandino Crystal Award" />
+          <div class="meta">
+            <h3>Brandino Crystal Tower</h3>
+            <p>Optically clear crystal tower with custom-etched Rocket identity and satin-lined presentation box.</p>
+            <div class="tags">
+              <span class="tag">Crystal</span>
+              <span class="tag">Executive</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile" data-id="rocket-puzzle" data-category="gift" data-tags="interactive|desk">
+          <img src="Assets/images/RKT_Puzzle.jpg" alt="Rocket Puzzle" />
+          <div class="meta">
+            <h3>Rocket Precision Puzzle</h3>
+            <p>Machined aluminum puzzle with anodized Rocket red finish and hidden message reveal.</p>
+            <div class="tags">
+              <span class="tag">Interactive</span>
+              <span class="tag">Desk</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile" data-id="scarborough" data-category="award" data-tags="glass|accent">
+          <img src="Assets/images/Scarborough_10.jpg" alt="Scarborough Glass Award" />
+          <div class="meta">
+            <h3>Scarborough Glass Tribute</h3>
+            <p>Beveled glass sculpture with polished aluminum base and interchangeable Rocket medallion.</p>
+            <div class="tags">
+              <span class="tag">Glass</span>
+              <span class="tag">Polished</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile" data-id="rocket-apparel" data-category="apparel" data-tags="wearable|limited">
+          <img src="Assets/images/Rocket%20Oakley%20Award.png" alt="Rocket Oakley Apparel" />
+          <div class="meta">
+            <h3>Oakley Recognition Kit</h3>
+            <p>Premium Oakley jacket and accessory bundle with Rocket-branded presentation packaging.</p>
+            <div class="tags">
+              <span class="tag">Wearable</span>
+              <span class="tag">Kit</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tile" data-id="rocket-wood-aluminum" data-category="gift" data-tags="wood|metal|desk">
+          <img src="Assets/images/Rocket_Wood%26Aluminum.jpg" alt="Rocket Wood and Aluminum" />
+          <div class="meta">
+            <h3>Wood &amp; Aluminum Recognition</h3>
+            <p>Warm wood plinth with brushed aluminum fins and dimensional Rocket logotype.</p>
+            <div class="tags">
+              <span class="tag">Mixed Material</span>
+              <span class="tag">Desk</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="detail-drawer" id="drawer" aria-hidden="true">
+    <div class="overlay" data-drawer-close></div>
+    <aside class="panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <button class="close" type="button" data-drawer-close aria-label="Close">×</button>
+      <div class="media">
+        <div class="hero" id="drawer-hero"></div>
+        <div class="thumbs" id="drawer-thumbs"></div>
+      </div>
+      <div class="info">
+        <h2 id="drawer-title"></h2>
+        <p id="drawer-description"></p>
+        <div class="detail-meta">
+          <div>Material <span id="drawer-material"></span></div>
+          <div>Lead Time <span id="drawer-lead"></span></div>
+          <div>Finishes <span id="drawer-finishes"></span></div>
+        </div>
+        <a id="drawer-preview" class="cta" href="#" target="_blank" rel="noopener">Launch 3D Preview</a>
+      </div>
+    </aside>
+  </section>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="overlay" data-lightbox-close></div>
+    <div class="frame">
+      <button type="button" data-lightbox-close aria-label="Close">×</button>
+      <img id="lightbox-image" alt="Expanded showroom imagery" />
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <img src="Assets/Honors/Honors%20Thick%20Logo.png" alt="Honors" />
+      <span>997 Rochester Road • Troy, MI • sales@honorsone.com</span>
+    </div>
+  </footer>
+
+  <script src="scripts/showroom.js" defer></script>
+</body>
+</html>
