@@ -414,7 +414,7 @@
       toggleButton(templateBtn, tplHref, tplLabel || 'Download Template');
 
       if(drawer){
-        drawer.classList.add('is-open');
+        drawer.classList.add('open');
         drawer.removeAttribute('hidden');
         drawer.setAttribute('aria-hidden', 'false');
       }
@@ -434,7 +434,7 @@
         overlay.setAttribute('hidden', '');
       }
       if(drawer){
-        drawer.classList.remove('is-open');
+        drawer.classList.remove('open');
         drawer.setAttribute('aria-hidden', 'true');
         drawer.setAttribute('hidden', '');
       }
@@ -455,7 +455,7 @@
       state.lightboxTrigger = origin || null;
       lightboxImg.src = src || PLACEHOLDER_IMAGE;
       lightboxImg.alt = alt || '';
-      lightbox.classList.add('is-open');
+      lightbox.classList.add('open');
       lightbox.removeAttribute('aria-hidden');
       lightbox.removeAttribute('hidden');
       document.body.classList.add('showroom-lightbox-open');
@@ -467,7 +467,7 @@
 
     const closeLightbox = ()=>{
       if(!lightbox) return;
-      lightbox.classList.remove('is-open');
+      lightbox.classList.remove('open');
       lightbox.setAttribute('aria-hidden', 'true');
       lightbox.setAttribute('hidden', '');
       if(lightboxImg){
@@ -524,12 +524,12 @@
 
     document.addEventListener('keydown', (ev)=>{
       if(ev.key === 'Escape' || ev.key === 'Esc'){
-        if(lightbox && lightbox.classList.contains('is-open')){
+        if(lightbox && lightbox.classList.contains('open')){
           ev.preventDefault();
           closeLightbox();
           return;
         }
-        if(drawer && drawer.classList.contains('is-open')){
+        if(drawer && drawer.classList.contains('open')){
           ev.preventDefault();
           closeDrawer();
         }
