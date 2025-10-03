@@ -37,9 +37,9 @@
     <div id="cards"></div>
   </main>
 
-  <section id="detail" class="detail">
-    <div class="overlay" id="detail-overlay"></div>
-    <div class="drawer">
+  <section id="detail" class="detail" aria-hidden="true">
+    <div class="overlay" id="detail-overlay" aria-hidden="true"></div>
+    <div class="drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" aria-describedby="detail-desc">
       <button id="detail-close" class="close" aria-label="Close">×</button>
       <div class="media">
         <div id="detail-hero" class="hero"></div>
